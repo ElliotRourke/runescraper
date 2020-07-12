@@ -1,5 +1,6 @@
 package com.runescaper.shell.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.runescaper.shell.priceengine.RunescapePriceResource;
 import dao.ItemDAO;
 import org.springframework.shell.standard.ShellComponent;
@@ -16,8 +17,8 @@ public class PricingController {
 
     //TODO: Remove
     @ShellMethod("Cool test")
-    public String query(String itemId) {
+    public String query(String itemId) throws JsonProcessingException {
         ItemDAO itemPrice = runescapePriceResource.query(itemId);
-        return "" + itemPrice.current.price;
+        return "" + itemPrice.item.current.price;
     }
 }

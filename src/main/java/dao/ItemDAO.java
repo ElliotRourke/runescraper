@@ -1,19 +1,23 @@
 package dao;
 
 public class ItemDAO {
-    public String icon;
-    public String icon_large;
-    public String id;
-    public String type;
-    public String typeIcon;
-    public String name;
-    public String description;
-    public String members;
-    public current current = new current();
-    public today today = new today();
-    public day30 day30 = new day30();
-    public day90 day90 = new day90();
-    public day180 day180 = new day180();
+    public item item = new item();
+
+    public static class item {
+        public String icon;
+        public String icon_large;
+        public String id;
+        public String type;
+        public String typeIcon;
+        public String name;
+        public String description;
+        public String members;
+        public current current = new current();
+        public today today = new today();
+        public day30 day30 = new day30();
+        public day90 day90 = new day90();
+        public day180 day180 = new day180();
+    }
 
     public static class current {
         public String trend;
@@ -39,7 +43,5 @@ public class ItemDAO {
         public String trend;
         public String change;
     }
-
-
 
 }
