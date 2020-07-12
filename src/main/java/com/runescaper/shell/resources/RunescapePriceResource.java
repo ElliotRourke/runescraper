@@ -1,8 +1,9 @@
-package com.runescaper.shell.priceengine;
+package com.runescaper.shell.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dao.ItemDAO;
+import com.runescaper.shell.dao.ItemDAO;
+import com.runescaper.shell.model.ItemPrice;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,15 +21,18 @@ public class RunescapePriceResource implements PriceResource {
 
     @Override
     public ItemPrice getCurrentPrice(String itemName) {
+        ItemPrice itemPrice = new ItemPrice();
         try {
-            ItemDAO itemDAO = query(itemName);
+            ItemDAO dao = query(itemName);
+            itemPrice.price = Integer.parseInt(dao.item.current.price);
+            itemPrice.itemName = dao.item.name;
+            itemPrice.itemId = dao.item.id;
         } catch (JsonProcessingException e) {
             return new ItemPrice();
         }
-        return null;
+        return itemPrice;
     }
 
-    //TODO: Add error handling, pojo mapping
     private ItemDAO query(String itemId) throws JsonProcessingException {
         String response = runescapeWebClient
                 .get()
@@ -37,7 +41,6 @@ public class RunescapePriceResource implements PriceResource {
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
-
         return objectMapper.readValue(response, ItemDAO.class);
     }
 }

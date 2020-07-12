@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 @Configuration
-public class RunescapeAPIConfig {
+public class ExternalAPIConfig {
 
     private static final String OSRS_GE_ITEM_DETAIL_URL = "http://services.runescape.com/m=itemdb_oldschool/api/catalogue";
 

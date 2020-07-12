@@ -1,4 +1,4 @@
-package dao;
+package com.runescaper.shell.dao;
 
 public class ItemDAO {
     public item item = new item();
