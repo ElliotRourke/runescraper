@@ -1,7 +1,11 @@
 package com.runescaper.shell.priceengine;
 
 public class ItemPrice {
-    String itemId;
-    String itemName;
-    int x;
+    private String itemId;
+    private String itemName;
+    private int price;
+
+    public int getPrice() {
+        return price;
+    }
 }
