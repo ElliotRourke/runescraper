@@ -8,20 +8,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-public class RunescapePriceResource {
+public class RunescapePriceResource implements PriceResource {
 
     private final WebClient runescapeWebClient;
+    private ObjectMapper objectMapper;
 
     public RunescapePriceResource(WebClient runescapeWebClient) {
         this.runescapeWebClient = runescapeWebClient;
+        this.objectMapper = new ObjectMapper();
+    }
+
+    @Override
+    public ItemPrice getCurrentPrice(String itemName) {
+        try {
+            ItemDAO itemDAO = query(itemName);
+        } catch (JsonProcessingException e) {
+            return new ItemPrice();
+        }
+        return null;
     }
 
     //TODO: Add error handling, pojo mapping
-    public ItemDAO query(String itemId) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+    private ItemDAO query(String itemId) throws JsonProcessingException {
         String response = runescapeWebClient
                 .get()
-                .uri("/detail.json?item={itemId}",itemId)
+                .uri("/detail.json?item={itemId}", itemId)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -29,5 +40,4 @@ public class RunescapePriceResource {
 
         return objectMapper.readValue(response, ItemDAO.class);
     }
-
 }
